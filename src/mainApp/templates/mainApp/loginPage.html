@@ -1,0 +1,21 @@
+{% extends "mainApp/wrapper.html" %}
+
+
+{% block content %}
+
+<!-- <div id="word_cont"> -->
+  <div class="login_margin col-3">
+
+    <div class align="center"><h1>Вход в аккаунт</h1></div>
+    
+    <form id="update_data" method="post">{% csrf_token %}
+        {{form}}
+      </form>
+    
+    <button form="update_data" type="submit" class="btn btn-primary btn-block mt-3">Войти</button>
+
+    <div class="my_margin_top" align="center"><a href={% url 'register_page' %}>Создать аккаунт</a></div>
+    
+    </div>
+<!-- </div> -->
+{% endblock %}

@@ -1,0 +1,119 @@
+
+.left-but {
+    float: left;
+    margin-bottom: 20px;
+
+  }
+
+.right-but {
+    float: right;
+}
+
+.btn-circle {
+    width: 70px;
+    height: 70px;
+    font-weight: 700;
+    border-radius: 35px;
+    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 36px;
+    white-space: normal; 
+}
+
+#my_cont {
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-top: 1%;
+}
+
+#col_cont {
+    padding-left: 10%;
+    padding-right: 1%;
+}
+
+#reg_cont {
+    padding-left: 10%;
+    padding-right: 1%;
+}
+
+#narrow_col {
+    padding-left: 40%;
+    padding-right: 40%;
+}
+
+#table_cont {
+    line-height: 1;
+}
+
+.login_margin {
+    margin: 200px auto;
+}
+
+.register_margin {
+    margin: 150px auto;
+}
+
+.stat_margin {
+    margin: 100px auto;
+}
+
+.exercise_margin {
+    margin: 5% auto;
+}
+
+.result_margin {
+    margin: 2% auto;
+}
+
+.word_margin_top {
+    margin-top: 20px;
+}
+
+.my_margin_top {
+    margin-top: 10px;
+}
+
+.cont_center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.word_cont {
+    padding-left: 35%;
+    padding-top: 5%;
+}
+
+#search_res_cont {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+#collection_cont {
+    padding-top: 2%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.brd {
+    border: 4px double black; /* Параметры границы */
+    border-color: #cacd58;
+    border-style: solid;
+    
+}
+
+.ex_brd {
+    border: 3px double black; /* Параметры границы */
+    border-color: #4d7dd6;
+    border-style: solid;
+    
+}
+
+.right {
+    margin: 0 0 0 auto;
+
+     /* или */
+    margin-left: auto;
+}

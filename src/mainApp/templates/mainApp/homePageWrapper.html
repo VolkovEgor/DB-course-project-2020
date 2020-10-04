@@ -1,0 +1,31 @@
+{% extends "mainApp/wrapper.html" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-sm-9">
+    {% block buttons %} {% endblock %}
+
+    {% if page_type == 2 and all_collections_number == 0 %}
+      <p><font color="gray"><h3 align="center" my-4><em>У Вас еще нет своих подборок. Создайте их!</em></h3></p></font></p>
+    {% elif page_type == 3 and all_collections_number == 0 %}
+      <p><font color="gray"><h3 align="center" my-4><em>У Вас еще нет подписок. Добавьте их!</em></h3></p></font></p>
+    {% elif is_success == False %}
+      <p><font color="gray"><h3 align="center" my-4><em>Нет таких подборок :(</em></h3></p></font></p>
+    {% else %}
+      {% block home_page_content %} {% endblock %}
+    {% endif %}
+    {% if collections_number > 0 %}
+      {% include "mainApp/includes/pagination.html" with list=list_collections %} 
+    {% endif %}
+  </div>
+  <div class="col-sm-3">
+    <div class="mt-5">
+      {% include "mainApp/includes/StatisticsContentPage.html" %}
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,46 @@
+
+<div id="col_cont">
+  <ul class="list-group list-group-horizontal mt-3">
+
+    <div class="dropdown">
+      <button  class="btn btn-secondary dropdown-toggle mx-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Сортировать
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
+          <a class="dropdown-item" href={% url order_page_name 1 1 %}> по дате создания</a>
+          <a class="dropdown-item" href={% url order_page_name 2 1 %}> по названию</a> 
+          <a class="dropdown-item" href={% url order_page_name 3 1 %}> по количеству просмотров</a>
+          <a class="dropdown-item" href={% url order_page_name 4 1 %}> по количеству подписок</a>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button  class="btn btn-secondary dropdown-toggle mx-4" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Фильтровать
+      </button>
+      <form action="{% url filter_page_name 1 %}" method="get" class="dropdown-menu p-4">
+        <div class="form-group">
+          <label for="exampleDropdownFormEmail2">Сложность</label>
+          <select class="custom-select custom-select-sm" name="level">
+            <option selected>...</option>
+            <option value="1">Легко</option>
+            <option value="2">Средне</option>
+            <option value="3">Сложно</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="exampleDropdownFormPassword2">Автор</label>
+            <input name="author" type="text" class="form-control mr-sm-2" placeholder="...">
+        </div>
+        <button type="submit" class="btn btn-primary">Фильтровать</button>
+      </form>
+        
+    </div>
+    
+    {% if order_page_name == "my_col_order_by_page" %}
+      <button type="button" class="btn btn-primary ml-5 mb-2 btn" data-toggle="modal" data-target="#exampleModalCenter">
+        Создать подборку
+      </button>
+    {% endif %}
+  </ul>
+</div>

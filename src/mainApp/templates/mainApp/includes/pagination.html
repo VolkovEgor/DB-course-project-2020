@@ -1,0 +1,53 @@
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center mt-3">
+    
+    {% if list.has_previous %} 
+      <li class="page-item"> 
+        <a class="page-link" href={{main_page_name_p1}}/{{list.previous_page_number}}{{main_page_name_p2}}>Предыдущая</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled"> 
+        <a class="page-link">Предыдущая</a>
+      </li>
+    {% endif %}
+
+    {% if list.num_pages < 6 %}
+      {% for page in list.paginator.page_range %}
+        {% if page == list.number %}
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href={{main_page_name_p1}}/{{page}}{{main_page_name_p2}}>{{page}}<span class="sr-only">(current)</span></a>
+          </li>
+        {% else %}
+          <li class="page-item"><a class="page-link" href="#">{{page}}</a></li>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      {% for page in list.paginator.page_range %}
+        {% with p1=page p2=page p_1=page p_2=page dop1=page dop2=page %}
+          {% if page == list.number %}
+            <li class="page-item active" aria-current="page">
+              <a class="page-link" href={{main_page_name_p1}}/{{page}}{{main_page_name_p2}}>{{page}}<span class="sr-only">(current)</span></a>
+            </li>
+          {% elif list.number == p1|add:"1" or list.number == p2|add:"2" or list.number  == p_1|add:"-1" or list.number == p_2|add:"-2" %}
+            <li class="page-item"><a class="page-link" href={{main_page_name_p1}}/{{page}}{{main_page_name_p2}}>{{page}}</a></li>
+          {% endif %}
+          {% if list.number == 1 and list.number == dop1|add:"-3" or list.number == 1 and list.number == dop2|add:"-4" or list.number == 2 and list.number == dop1|add:"-3" %}
+            <li class="page-item"><a class="page-link" href={{main_page_name_p1}}/{{page}}{{main_page_name_p2}}>{{page}}</a></li> 
+          {% endif %}
+        {% endwith %}
+      {% endfor %}
+    {% endif %}
+
+    {% if list.has_next %} 
+      <li class="page-item"> 
+        <a class="page-link" href={{main_page_name_p1}}/{{list.next_page_number}}{{main_page_name_p2}}>Следующая</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled"> 
+        <a class="page-link" href="#">Следующая</a>
+      </li>
+    {% endif %}
+
+  </ul>
+</nav>

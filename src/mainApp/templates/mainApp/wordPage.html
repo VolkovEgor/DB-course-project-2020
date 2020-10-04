@@ -1,0 +1,114 @@
+{% extends "mainApp/wrapper.html" %}
+
+{% block content %}
+
+{{error}}
+{% if messages %}
+  <div class="alert alert-danger" role="alert">
+    {{messages}}
+  </div>
+{% endif %}
+
+  
+
+
+
+  <div class="stat_margin col-4" align="center">
+    <div class="mx-3"><p align="left"><a href={{cur_url_col}}>Назад</a></p></div>
+
+    <div class="brd mx-3 mt-3">
+      <p class="mb-2"><h3>{{word.title}}</h3></p>  
+      <p class="mb-2"><h3>{{word.transcription}}</h3></p>  
+      <p class="mb-2"><h3>{{word.translation}}</h3></p>  
+
+      <ul class="list-inline"align="left">
+        <div>
+            <li>
+                <span class="ml-5"> Просмотров: </span>
+                <span class="badge badge-primary badge-pill">{{word.views_number}}</span>
+            </li>
+            <li>
+                <span class="ml-5"> Добавлений в подборки: </span>
+                <span class="badge badge-primary badge-pill">{{word.additions_number}}</span>
+            </li>
+            {% if request.user.is_authenticated %}
+            <li>
+              <span class="ml-5"> Ваш текущий статус по слову: </span>
+              {% if word_stat == 0 %}
+                <span class="badge badge-warning">Не начато</span>
+              {% elif word_stat == 1 %}
+                <span class="badge badge-danger">Ошибка при изучении</span>
+              {% else %}
+              <span class="badge badge-success">Изучено</span>
+              {% endif %}
+            </li>
+            <li>
+              <span class="ml-5"> Ошибок при изучении: </span>
+              <span class="badge badge-primary badge-pill">{{errors_number}}</span>
+            </li>
+            {% endif %}
+        </div>
+        
+      </ul>
+      <h4 align="center"><em>Рейтинг: {{word.relative_rating.value}}</em></h4>  
+    </div>
+
+    {% if request.user.is_authenticated %}
+      <div class="col">
+        <div class="dropdown">
+          <button  class="btn btn-primary dropdown-toggle mx-4 mt-3" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Добавить в подборку
+          </button>
+          <form action={% url 'add_word_page' word.id%} method="get" class="dropdown-menu p-4">
+            <div class="form-group">
+              <label for="exampleDropdownFormEmail2">Выберите подборку:</label>
+              <select class="custom-select custom-select-sm" name="collection">
+                {% for col in my_collections %}
+                  <option value={{col.id}}>{{col.title}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+          </form>
+            
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+
+<!-- Modal -->
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Добавить в подборку</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Выберите подборку
+                </a>
+              
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  {% for col in my_col %}
+                    <a class="dropdown-item" href=/add_word/{{col.id}}/add/{{word.id}}>{{col.title}}</a>
+                  {% endfor %}
+                  
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+          <button form="add_form" type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

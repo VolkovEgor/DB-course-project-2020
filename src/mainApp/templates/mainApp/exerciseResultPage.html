@@ -1,0 +1,54 @@
+{% extends "mainApp/wrapper.html" %}
+
+{% block content %}
+<div class="result_margin">
+  <h1 align="center">Результаты</h1>   
+
+  <h3 align="center">Дано {{correct_number}} правильных ответов из {{total_number}}</h3>   
+
+  <div class="text-center"> 
+    <a class="btn btn-primary mx-1" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      Подробный результат
+    </a>
+
+    {% if words_is_remained %}
+      <a href={% url 'exercise_start_page' col_id %} class="btn btn-primary mx-1">Тренироваться еще</a>
+    {% endif %}
+
+    <a href={{cur_url_col}} class="btn btn-primary mx-1">Вернуться к подборке</a>
+  </div>
+  </p>
+  <div class="collapse" id="collapseExample">
+    <div id=my_cont>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Слово</th>
+            <th scope="col">Перевод</th>
+            <th scope="col">Ваш ответ</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for str in table %}
+                {% if str.bool_answer%}
+                <tr style="background-color: LightGreen">
+                {% else %}
+                <tr style="background-color: LightCoral">
+                {% endif %}
+                  <td>{{str.translation}}</td>
+                  <td>{{str.title}}</td>
+                  <td>{{str.answer}}</td>
+    
+                </tr>
+            {% endfor %}
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

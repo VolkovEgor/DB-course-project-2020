@@ -1,0 +1,67 @@
+
+
+    <div id="col_cont">
+        <ul class="list-group mt-4">   <!-- mt - верт отступ-->
+
+            <li class="list-group-item">
+                <!-- <b>{{i.date|date:"d-m-Y"}}</b> -->
+                <img src={{i.image.url}} width="100" height="100" class="rounded float-left mr-3">
+
+                <div class="container">
+                    <div class="row">
+                      <div class="col mt-2">
+                        <span><a href={% url 'col_page' i.id %}><p><font size="5">{{i.title}}</font></a></span>
+                        <span class="ml-3 ">Автор:</span>   
+                        <span class="ml-1 mr-3"><font size="5" color='DarkSlateBlue'><em>{{i.author}}</em></font></em></span>
+                        <span class="ml-1 mr-3"><font size="4" >{{ i.date|date:"d.m.Y" }}</font></span>
+
+
+                        {% if i.level == 'e'%}
+                            <span class="badge badge-success">Легко</span>
+                        {% elif i.level == 'm'%}    
+                            <span class="badge badge-warning">Средне</span>
+                        {% else %}
+                            <span class="badge badge-danger">Сложно</span>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="d-flex flex-row bd-highlight">
+                            {% with ost=i.words_number|get_digit:1 %}
+                                {% if 2 == ost or 3 == ost or 4 == ost %}
+                                    <div class="bd-highlight ml-4" >{{i.words_number}} слова</div>
+                                {% elif  1 == ost %}
+                                <div class="bd-highlight ml-4">{{i.words_number}} слово</div>
+                                {% else %}
+                                    <div class="bd-highlight ml-4">{{i.words_number}} слов</div>
+                                {% endif %}
+                            {% endwith %}
+
+                            
+                            <div class="bd-highlight"><span class="ml-5"> Просмотров: </span>
+                                <span class="badge badge-primary badge-pill ml-1">{{i.views_number}}</span></div>
+                            <div class="bd-highlight"><span class="ml-5"> Подписок: </span>
+                                <span class="badge badge-primary badge-pill">{{i.additions_number}}</span></div>
+                          </div>
+                            
+                        
+                     
+                        
+                      
+                    </div>
+                  </div>
+                
+                
+                
+
+        
+            </li>  
+        </ul>
+    </div>
+<!-- {% if url_home == request.path and i.is_public or url_my_subscriptions == request.path and i.is_public or url_my_collections == request.path %} -->
+
+<!-- {% endif %}   -->
+        
+        
+
+          

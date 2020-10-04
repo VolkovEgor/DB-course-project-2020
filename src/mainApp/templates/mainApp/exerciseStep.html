@@ -1,0 +1,39 @@
+{% extends "mainApp/wrapper.html" %}
+
+
+{% block content %}
+
+{% if messages %}
+ <ul class="messages">
+  {% for message in messages %}
+    <li class="{{ message.tags }}">
+      {{ message|safe }}
+      <a href="#" class="close">x</a>
+    </li>
+  {% endfor %}
+ </ul>
+{% endif %}
+
+<div class="exercise_margin">
+  <div class="text-center"> 
+    <h4>Вопрос {{step}} из {{len}}</h4>
+
+      <div class="ex_brd col-4 my-3", style="margin: auto">
+        <p><h3>{{word}}</h3></p>
+      </div> 
+
+      <h5><font color="grey"><em>Введите соответствующее английское слово:</em></font></h5>
+
+    <div id="narrow_col">
+      <form id="exercise_step" action={{request.path}} method="get" > {% csrf_token %}
+        <input name="answer" type="text" class="form-control mr-sm-2">
+      </form>
+      
+      <div class="float-right">
+        <button form="exercise_step" type="submit" class="btn btn-primary mt-3 mr-2">Дальше</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

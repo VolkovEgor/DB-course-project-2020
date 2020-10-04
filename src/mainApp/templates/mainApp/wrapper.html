@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Учим слова вместе!</title>
+
+  <!-- {% load static %}
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">  --> <!-- static файл-->
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+  <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+  <script src="{% static 'scripts/script.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="#"><h3><em>EnglishWords</em></h3></a></a>
+    
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link {% if order_page_name and order_page_name == "col_order_by_page" %}active{% endif %}" href={% url 'cols_page' 1 %}>Подборки</a>
+      </li>
+      {% if request.user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link {% if order_page_name and order_page_name == "my_col_order_by_page" %}active{% endif %}" href={% url 'my_col_page' 1 %}>Мои подборки</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if order_page_name and order_page_name == "my_subs_order_by_page" %}active{% endif %}" href={% url 'my_subs_page' 1 %}>Мои подписки</a>
+      </li>
+      {% endif %}
+    </ul>
+
+      <form action={% url 'search_page' 1 %} method="get" class="form-inline my-2 my-lg-0">
+        <input name="search" type="text" class="form-control mr-sm-2" placeholder="Слово">
+        <button type="submit" class="btn btn-outline-primary my-2 my-sm-0">Найти в словаре</button>
+      </form>
+    
+    <ul class="form-inline my-2 my-lg-0">
+      {% if request.user.is_authenticated %}
+      
+      
+      <div class="dropdown">
+        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href={% url 'edit_profile_page' request.user.id %}>Редактировать профиль</a>
+          <a class="dropdown-item" href={% url 'stat_page' request.user.id %}>Мои достижения</a>
+          <a class="dropdown-item" href={% url 'logout_page' %}>Выход</a>
+        </div>
+      </div>
+      
+      <h3 class="ml-2 text-info"><em>{{request.user}}</em></h3>
+      <img src={{request.user.photo.url}} width="75" height="75" class="rounded float-left mx-2">
+
+      
+
+      
+
+      {% else %}
+      
+      {% url "login_page" as url_login_page %}
+      <a class="btn btn-outline-primary mr-2" href={{url_login_page}} role="button">Вход</a>
+      {% url "register_page" as url_register_page %}
+      <a class="btn btn-outline-primary" href={{url_register_page}} role="button">Регистрация</a>
+      
+      {% endif %}
+    </ul>
+
+
+  </nav>
+
+
+  
+
+  {% block content %}{% endblock %}
+
+
+
+</body>
+</html>

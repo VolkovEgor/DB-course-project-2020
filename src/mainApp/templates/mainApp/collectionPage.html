@@ -1,0 +1,132 @@
+{% extends "mainApp/wrapper.html" %}
+
+
+{% block content %}
+  <div id="collection_cont">
+    <h1 align="center">{{cur_col.title}}</h1> 
+    <h4 align="center"><em>Автор: {{cur_col.author}}</em></h4>     
+    <p><a href={{cur_url_col_list}}>Назад к подборкам</a></p>
+
+    {% if request.user.is_authenticated %}
+      {% if cur_col.author.id == request.user.id %}
+
+        <script>
+          function delete_question() {
+            if (confirm("Вы уверены?")) {
+              document.getElementById('delete_form').submit()
+            }
+          }
+        </script>
+        
+        <form id="delete_form" action="{% url 'delete_col_page' cur_col.id %}" method="post">{% csrf_token %}</form>
+
+        <a href={% url 'edit_col_page' cur_col.id %} class="left-but btn btn-primary mx-2">Редактировать</a>
+        <a href="javascript:void()" onclick="delete_question()" class="left-but btn btn-primary mx-2">Удалить</a>
+        
+      
+      {% else %}
+        {% if request.user not in cur_col.subscribers.all %}
+          <a href={% url 'add_subscription_page' cur_col.id%} class="left-but btn btn-primary">Подписаться</a>
+        {% else %}
+          <a href={% url 'remove_subscription_page' cur_col.id%} class="left-but btn btn-primary">Отписаться</a>
+        {% endif %}
+      {% endif %}
+
+      {% if not words_number %}
+        {% if cur_col.author.id == request.user.id %}
+          <span mx-3>Добавьте слова в подборку, чтобы начать тренироваться!</span>
+        {% else %}
+          <span mx-3>Подождите, пока автор подборки добавит в нее слова, чтобы начать тренироваться!</span>
+        {% endif %}
+      {% elif not new_words_number %}
+        <span>Вы выучили все слова в подборке!</span>
+      {% elif cur_col.author.id == request.user.id or request.user in cur_col.subscribers.all %}
+        {% if exercise_is_ended %}
+          <a href={% url 'exercise_start_page' cur_col.id %} class="btn btn-primary  mx-2">
+            Начать тренировку
+          </a>
+        {% else %}
+          <button type="button" class="btn btn-primary mx-2" data-toggle="modal" data-target="#resume_exercise">
+            Начать тренировку
+          </button>
+        {% endif %}
+      {% endif %}
+
+      {% if cur_col.author.id == request.user.id or request.user in cur_col.subscribers.all %}
+        <a href={% url 'reset_progress_page' cur_col.id %} class="right-but btn btn-primary ml-2 btn">
+          Сбросить прогресс по изученным словам
+        </a>
+      {% endif %}
+
+    {% endif %}
+
+    <div class style="margin-top: 20px;">
+      <table class="table table-bordered">
+        <thead>
+          <tr valign=center align=center>
+            <th scope="col">Слово</th>
+            <th scope="col">Транскрипция</th>
+            <th scope="col">Перевод</th>
+            {% if request.user.is_authenticated %}
+              <th scope="col">Статус</th>
+              {% if request.user == cur_col.author %}
+                <th scope="col">Удаление</th>
+              {% endif %}
+            {% endif %}
+
+          </tr>
+        </thead>
+        <tbody>
+            {% for word in words %}
+                <tr valign=center align=center>
+                <td><a href={% url 'word_page' word.id %}>{{word.title}}</a></td>
+                <td>{{word.transcription}}</td>
+                <td>{{word.translation}}</td>
+                {% if request.user.is_authenticated %}
+                  <td>
+                    {% if word.status == "learned" %}
+                      <span class="badge badge-success">Изучено</span>
+                    {% elif word.status == "failed" %}
+                      <span class="badge badge-danger">Провалено</span>
+                    {% else %}
+                      <span class="badge badge-warning">Не начато</span>
+                    {% endif %}
+                  </td>
+                  {% if request.user == cur_col.author %}
+                    <td width="3%">
+                      <a href={% url 'remove_word_page' cur_col.id word.id %} class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Удалить слово из подборки">
+                        x
+                      </a>
+                    </td>
+                  {% endif %} 
+                {% endif %} 
+                </tr>
+                
+            {% endfor %}
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  {% if request.user.is_authenticated %}
+    <div class="modal fade" id="resume_exercise" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">У Вас не завершено предыдущее упражнение!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <a href={% url 'exercise_start_page' cur_col.id %} class="btn btn-primary  ml-5 btn-lg">Начать заново</a>
+            <a href={% url 'exercise_step_page' next_step %} class="btn btn-primary  ml-5 btn-lg">Продолжить </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "mainApp/homePageWrapper.html" %}
+
+
+{% block buttons %}
+  {% include "mainApp/includes/OptionsButtons.html" %}
+{% endblock %}
+
+{% block home_page_content %}
+
+  {% for i in list_collections %}
+
+      {% include "mainApp/includes/item_col.html" %}
+
+  {% endfor %}
+
+{% endblock %}
+
+

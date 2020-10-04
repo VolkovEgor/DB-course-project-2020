@@ -1,0 +1,25 @@
+{% extends "mainApp/wrapper.html" %}
+
+{% block content %}
+
+  <div class="container mt-5">
+    <!-- <form action="/collection/{{cur_col.id}}" method="post" class='edit-form' enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="Save", name="save_button">
+    </form> -->
+
+    <form id="update_data" acrion={% url 'edit_col_page' cur_col.id %} method="post" enctype="multipart/form-data">
+      {{form}}
+      {% csrf_token %}
+    </form>
+
+    <!-- {% url 'home' as url_col_page %}
+    <a href={{url_col_page}}></a><button type="button" class="btn btn-secondary" data-dismiss="modal">Выйти</button></a> -->
+
+    <a href={% url 'col_page' cur_col.id %}><button type="button" class="btn btn-secondary" data-dismiss="modal">Выйти</button></a>
+
+    <button form="update_data" type="submit" class="btn btn-primary">Сохранить</button>
+  </div>
+
+{% endblock %}

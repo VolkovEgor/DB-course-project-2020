@@ -1,0 +1,92 @@
+{% extends "mainApp/wrapper.html" %}
+
+
+{% block content %}
+
+
+
+
+
+
+{% if is_success == False %}
+<p><font color="gray"><h1 align="center" my-4><em>По вашему запросу ничего не нашлось :(</em></h1></p></font></p>
+{% else %}
+
+    <p><font color="gray"><h2 align="center" my-4><em>Результаты поиска</em></h2></p></font></p>
+    {% for i in object_list %}
+
+    <div id="search_res_cont">
+      <ul class="list-group mx-5 mt-4">   <!-- mt - верт отступ-->
+
+          <li class="list-group-item">  
+              
+              <div class="container">
+                  <div class="row align-items-center">
+                  <div class="col-2">
+                      <a href={% url 'word_page' i.id %}><h4>{{i.title}}</h3></a>
+                  </div>
+                  <div class="col-2">
+                      <span><h4 class="text-info">{{i.transcription}}</h4></span>
+                  </div>
+                  <div class="col">
+                      <span><h4 class="text-info">{{i.translation}}</h4></span>
+                  </div>
+
+                  {% if request.user.is_authenticated %}
+                    <div class="row">
+                      <div class="dropdown">
+                        <button  class="btn btn-primary dropdown-toggle mx-4" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          +
+                        </button>
+                        <form action={% url 'add_word_page' i.id%} method="get" class="dropdown-menu p-4">
+                          <div class="form-group">
+                            <label for="exampleDropdownFormEmail2">Выберите подборку:</label>
+                            <select class="custom-select custom-select-sm" name="collection">
+                              {% for col in my_collections %}
+                                <option value={{col.id}}>{{col.title}}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                          <button type="submit" class="btn btn-primary">Добавить</button>
+                        </form>
+                          
+                      </div>
+                    </div>
+                    {% endif %}
+              </div>
+
+              <div class="row">
+                   
+                    <div class="bd-highlight"><span class="ml-5"> Просмотров: </span>
+                        <span class="badge badge-primary badge-pill ml-1">{{i.views_number}}</span></div>
+                    <div class="bd-highlight"><span class="ml-5"> Подписок: </span>
+                        <span class="badge badge-primary badge-pill">{{i.additions_number}}</span></div>
+                  </div>
+                    
+                
+             
+                
+              
+            </div>
+
+              
+
+          </li>  
+      </ul>
+    </div>
+
+
+
+    {% endfor %}
+
+    {% include "mainApp/includes/pagination.html" with list=object_list %}
+
+  {% endif %}
+
+
+
+
+
+{% endblock %}
+
+

@@ -1,0 +1,25 @@
+{% extends "mainApp/wrapper.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+  <!-- <form id="update_data" method="post">
+      {{ user_form.as_p }}
+      {{ profile_form.as_p }}
+      {% csrf_token %}
+      <p><input type="submit" value="Save changes"></p>
+    </form> -->
+
+  <form id="update_prof" acrion={% url 'edit_profile_page' request.user.id %} method="post" enctype="multipart/form-data"> 
+    {{ form.as_p }}
+    {% csrf_token %}
+    
+  <a href={% url 'cols_page' 1 %}><button type="button" class="btn btn-secondary" data-dismiss="modal">Выйти</button></a>
+
+  <button form="update_prof" type="submit" class="btn btn-primary">Сохранить</button>
+
+  </form> 
+</div>
+
+{% endblock %}

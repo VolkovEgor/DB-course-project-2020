@@ -1,0 +1,16 @@
+{% extends "mainApp/wrapper.html" %}
+
+{% block content %}
+
+<div id="word_cont">
+<div class="register_margin col-3">
+  <div class align="center"><h1>Создание аккаунта</h1></div>
+    <form id="update_data" method="post">{% csrf_token %}
+        {{form.as_p }}
+      </form>
+    
+      <button form="update_data" type="submit" class="btn btn-primary btn-block mt-3">Создать аккаунт</button>
+</div>
+</div>
+
+{% endblock %}

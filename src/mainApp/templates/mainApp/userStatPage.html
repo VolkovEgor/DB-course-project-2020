@@ -1,0 +1,56 @@
+{% extends "mainApp/wrapper.html" %}
+
+{% block content %}
+
+{{error}}
+{% if messages %}
+  <div class="alert alert-danger" role="alert">
+    {{messages}}
+  </div>
+{% endif %}
+
+  
+
+
+  <div class="stat_margin col-4" align="center">
+    <p align="left"><a href={% url 'cols_page' 1 %}>Назад</a></p>
+
+    <span><h1 align="center">Мои достижения</h1></span>  
+    <div class="brd mt-3">
+      <table class="table table-borderless">
+        <tbody>
+          <tr>
+            <td>Просмотрено слов:</td>
+            <th scope="row">{{stat.viewed_words_number}}</th>
+          </tr>
+          <tr>
+            <td>Добавлено в подборки слов:</td>
+            <th scope="row">{{added_words}}</th>
+          </tr>
+          <tr>
+            <td>Создано подборок:</td>
+            <th scope="row">{{user_col_numbers}}</th>
+          </tr>
+          <tr>
+            <td>Пройдено упражнений:</td>
+            <th scope="row">{{stat.ended_exercise_number}}</th>
+          </tr>
+          <tr>
+            <td>Изучено слов:</td>
+            <th scope="row">{{stat.relative_rating.correct_answers_number}}</th>
+          </tr>
+          <tr>
+            <td>Допущено ошибок:</td>
+            <th scope="row">{{error_number}}</th>
+          </tr>
+          <tr>
+            <td>Рейтинг:</td>
+            <th scope="row">{{stat.relative_rating.value}}</th>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+
+
+
+{% endblock %}

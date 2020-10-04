@@ -1,0 +1,72 @@
+
+<div class="border mr-5">
+  <h4 align="center">Лучшие пользователи:</h4>
+
+  <table class="table table-borderless table-sm">
+    <tbody>
+    {% for user in users_top %}
+    <p class="dline">
+      <tr align="left">
+        <th scope="row"><div class="mt-2 ml-2">{{user.position}}</div></th>
+        <td> 
+          <img src={{user.stat.user.photo.url}} width="40" height="40" class="rounded float-left mr-2">
+          <span align="left" class="d-inline-block text-truncate mt-2 ml-1" style="max-width: 100px;">
+            {{user.stat.user.username}}
+          </span></td>
+        <td>
+          <div class="mt-2">
+            {{user.stat.relative_rating.correct_answers_number}}
+            {% with ost=user.stat.relative_rating.correct_answers_number|get_digit:1 %}
+                {% if 2 == ost or 3 == ost or 4 == ost %}
+                    слова
+                {% elif  1 == ost %}
+                    слово
+                {% else %}
+                    слов
+                {% endif %}
+            {% endwith %}
+          </div>
+        </td>
+      </tr>
+    </p>
+    {% endfor %} 
+    </tbody>
+  </table>
+</div>
+
+
+<div class="border mr-5 mt-5">
+  <h4 align="center">Самые популярные слова:</h4>
+
+  <table class="table table-borderless table-sm">
+    <tbody>
+    {% for word in words_top %}
+    <p class="dline">
+      <tr align=left>
+        <th scope="row"><div class="mt-2 ml-2">{{word.position}}</div></th>
+        <td> 
+            <div class="mt-2"><a href={% url 'word_page' word.stat.id %}>{{word.stat.title}}</a></div>
+        </td>
+        <td>
+          <div class="mt-2 ml-3">
+            {{word.stat.views_number}}
+            {% with ost=word.stat.views_number|get_digit:1 %}
+                {% if 2 == ost or 3 == ost or 4 == ost %}
+                    просмотра
+                {% elif  1 == ost %}
+                    просмотр
+                {% else %}
+                    просмотров
+                {% endif %}
+            {% endwith %}
+          </div>
+        </td>
+      </tr>
+    </p>
+    {% endfor %} 
+    </tbody>
+  </table>
+</div>
+
+
+
